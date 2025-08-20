@@ -1,14 +1,16 @@
 using Awaken.TG.Main.Heroes.Crosshair;
 using HarmonyLib;
+using UnityEngine;
 
 namespace RemoveCrosshair;
 
 [HarmonyPatch]
 public class CrosshairPatch
 {
+    // Remove unwanted crosshair images, only leaves part of the crouching crosshair for sneaking info
     [HarmonyPatch(typeof(HeroCrosshair), nameof(HeroCrosshair.RefreshLayer))]
-    [HarmonyPostfix]
-    public static bool Prefix(HeroCrosshair __instance, CrosshairLayer layer)
+    [HarmonyPrefix]
+    public static bool OnRefreshLayerPrefix(HeroCrosshair __instance)
     {
         // Loop through parts of the crosshair
         foreach (CrosshairPart part in __instance.Elements<CrosshairPart>())
@@ -39,5 +41,24 @@ public class CrosshairPatch
 
         // Prevent the original method being patched from running
         return false;
+    }
+
+    // Adjust the position of the crouch crosshair symbol based on the configuration
+    [HarmonyPatch(typeof(HeroCrosshair), nameof(HeroCrosshair.OnCrouchToggled))]
+    [HarmonyPostfix]
+    public static void OnCrouchToggledPostfix(HeroCrosshair __instance, bool isCrouching)
+    {
+        if (isCrouching)
+        {
+            CrouchCrosshairPart crouchPart = __instance.TryGetElement<CrouchCrosshairPart>();
+            if (crouchPart != null && crouchPart.MainView != null)
+            {
+                RectTransform rt = crouchPart.MainView.GetComponent<RectTransform>();
+                if (rt != null)
+                {
+                    rt.anchoredPosition += new Vector2(Plugin.PluginConfig.SneakSymbolXPositionChange.Value, Plugin.PluginConfig.SneakSymbolYPositionChange.Value);
+                }
+            }
+        }
     }
 }

@@ -9,13 +9,18 @@ namespace RemoveCrosshair;
 public class Plugin : BaseUnityPlugin
 {
     internal static ManualLogSource Log;
+    internal static PluginConfig PluginConfig;
 
     public Harmony HarmonyInstance { get; set; }
+
+    public static Plugin Instance { get; set; }
 
     public void Awake()
     {
         Log = Logger;
         Log.LogInfo($"Plugin {PluginConsts.PLUGIN_GUID} is loading...");
+
+        PluginConfig = new PluginConfig(Config);
 
         HarmonyInstance = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
 
