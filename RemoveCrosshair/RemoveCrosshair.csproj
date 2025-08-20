@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Mod.props"/>
+  <PropertyGroup>
+    <AssemblyName>RemoveCrosshair</AssemblyName>
+    <Product>RemoveCrosshair</Product>
+    <Version>1.0.0</Version>
+    <RootNamespace>RemoveCrosshair</RootNamespace>
+  </PropertyGroup>
+</Project>
