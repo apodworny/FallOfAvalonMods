@@ -5,6 +5,7 @@
     <IsPackable>false</IsPackable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <RootNamespace>PreBuildTasks</RootNamespace>
+    <SolutionDir>$(MSBuildThisFileDirectory)..\</SolutionDir>
   </PropertyGroup>
 
   <Target Name="CopyManagedDllsToLib" BeforeTargets="PrepareForBuild">
