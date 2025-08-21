@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Mod.props"/>
+  <PropertyGroup>
+    <AssemblyName>RepositionHud</AssemblyName>
+    <Product>RepositionHud</Product>
+    <Version>1.0.0</Version>
+    <RootNamespace>RepositionHud</RootNamespace>
+  </PropertyGroup>
+</Project>
