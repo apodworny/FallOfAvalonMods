@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Mod.props"/>
+  <PropertyGroup>
+    <AssemblyName>ProficiencyHUD</AssemblyName>
+    <Product>ProficiencyHUD</Product>
+    <Version>1.0.0</Version>
+    <RootNamespace>ProficiencyHUD</RootNamespace>
+  </PropertyGroup>
+</Project>
