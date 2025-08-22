@@ -72,10 +72,10 @@ package_zip() {
     echo "Packaging $modDir into $zip_path"
 
     local tmpdir=$(mktemp -d)
-    mkdir -p "$tmpdir/plugins"
-    cp "$SCRIPT_DIR/$MOD_DLL_PATH" "$tmpdir/plugins/"
+    mkdir -p "$tmpdir/plugins/$modDir"
+    cp "$SCRIPT_DIR/$MOD_DLL_PATH" "$tmpdir/plugins/$modDir/"
     if [[ -f "$changelog_path" ]]; then
-        cp "$changelog_path" "$tmpdir/plugins/"
+        cp "$changelog_path" "$tmpdir/plugins/$modDir/"
     fi
     if [[ -n "$variation_dir" ]]; then
         cp -r "$variation_dir/." "$tmpdir/"
