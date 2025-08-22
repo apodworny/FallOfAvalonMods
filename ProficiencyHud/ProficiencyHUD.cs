@@ -21,12 +21,15 @@ public class ProficiencyHUD : MonoBehaviour
     private Sprite agilityIconSprite;
     private Sprite agilityXPBarSprite;
 
+    RectTransform agilityXPBarTransform;
+
     void Start()
     {
         GameObject proficiencyHUDBase = new GameObject("ProficiencyHUDBase", typeof(RectTransform));
         GameObject agilityLabelGameObject = new GameObject("AgilityLabel", typeof(RectTransform));
         GameObject agilityIconGameObject = new GameObject("AgilityIcon", typeof(RectTransform));
-        GameObject agilityXPGameObject = new GameObject("AgilityXP", typeof(RectTransform));
+        GameObject agilityXPBackgroundGameObject = new GameObject("AgilityXPBackground", typeof(RectTransform));
+        GameObject agilityXPBarGameObject = new GameObject("AgilityXPBar", typeof(RectTransform));
 
         loadAssets();
 
@@ -36,7 +39,8 @@ public class ProficiencyHUD : MonoBehaviour
         configureProficiencyHUDBase(canvas, proficiencyHUDBase);
         configureAgilityIcon(proficiencyHUDBase, agilityIconGameObject);
         configureAgilityLabel(proficiencyHUDBase, agilityLabelGameObject);
-        configureAgilityXP(proficiencyHUDBase, agilityXPGameObject);
+        configureAgilityXP(proficiencyHUDBase, agilityXPBackgroundGameObject);
+        configureAgilityXPBar(agilityXPBackgroundGameObject, agilityXPBarGameObject);
     }
 
     public void SetHero(Hero hero)
@@ -64,7 +68,10 @@ public class ProficiencyHUD : MonoBehaviour
         if (agilityLabel != null)
         {
             agilityLabel.text = hero.ProficiencyStats.Acrobatics.BaseValue.ToString();
-            //agilityPercentage
+
+            // I have the percentage in an integer, but width of the background is 35, so it should be percentage of 35
+            agilityXPBarTransform.sizeDelta = new Vector2(agilityPercentage * 0.35f, 5);
+            agilityXPBarTransform.anchoredPosition = new Vector2(agilityPercentage * 0.35f / 2, -2.5f);
         }
     }
 
@@ -134,25 +141,40 @@ public class ProficiencyHUD : MonoBehaviour
         agilityLabelTransform.anchoredPosition = new Vector2(24 + 10, -10);
     }
 
-    private void configureAgilityXP(GameObject proficiencyHUDBase, GameObject agilityXPGameObject)
+    private void configureAgilityXP(GameObject proficiencyHUDBase, GameObject agilityXPBackgroundGameObject)
     {
-        // Attach the agilityXPGameObject to the proficiencyHUDBase
-        agilityXPGameObject.transform.SetParent(proficiencyHUDBase.transform, false);
+        // Attach the agilityXPBackgroundGameObject to the proficiencyHUDBase
+        agilityXPBackgroundGameObject.transform.SetParent(proficiencyHUDBase.transform, false);
 
-        Image agilityXPBarImage = agilityXPGameObject.AddComponent<Image>();
-        agilityXPBarImage.sprite = agilityXPBarSprite;
+        Image agilityXPBackgroundImage = agilityXPBackgroundGameObject.AddComponent<Image>();
+        agilityXPBackgroundImage.sprite = agilityXPBarSprite;
 
-        RectTransform agilityIconRect = agilityXPGameObject.GetComponent<RectTransform>();
+        RectTransform agilityXPBackgroundRect = agilityXPBackgroundGameObject.GetComponent<RectTransform>();
 
         // Set the anchor to the top left corner of its parent
-        agilityIconRect.anchorMin = new Vector2(0, 1);
-        agilityIconRect.anchorMax = new Vector2(0, 1);
+        agilityXPBackgroundRect.anchorMin = new Vector2(0, 1);
+        agilityXPBackgroundRect.anchorMax = new Vector2(0, 1);
 
-        agilityIconRect.sizeDelta = new Vector2(35, 5);
+        agilityXPBackgroundRect.sizeDelta = new Vector2(35, 5);
 
         // To set the icon to be at the top left corner,
         // Set the x of the anchoredPosition to half the width of the icon
         // and the y to minus the height of the icon minus half the height
-        agilityIconRect.anchoredPosition = new Vector2(17.5f, -24 - 2.5f);
+        agilityXPBackgroundRect.anchoredPosition = new Vector2(17.5f, -24 - 2.5f);
+    }
+
+    private void configureAgilityXPBar(GameObject agilityXPBackgroundGameObject, GameObject agilityXPBarGameObject)
+    {
+        // Attach the agilityXPBackgroundGameObject to the agilityXPBackgroundGameObject
+        agilityXPBarGameObject.transform.SetParent(agilityXPBackgroundGameObject.transform, false);
+
+        agilityXPBarTransform = agilityXPBarGameObject.GetComponent<RectTransform>();
+        agilityXPBarTransform.sizeDelta = new Vector2(0, 5);
+
+        Image proficiencyBaseImage = agilityXPBarGameObject.AddComponent<Image>();
+        proficiencyBaseImage.color = Color.white;
+        agilityXPBarTransform.anchorMin = new Vector2(0, 1);
+        agilityXPBarTransform.anchorMax = new Vector2(0, 1);
+        agilityXPBarTransform.anchoredPosition = new Vector2(0, -2.5f);
     }
 }
