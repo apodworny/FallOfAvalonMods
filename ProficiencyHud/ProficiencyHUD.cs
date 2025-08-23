@@ -14,8 +14,8 @@ public class ProficiencyHUD : MonoBehaviour
     public static AssetBundle assets;
     private List<ProficiencyDisplay> proficiencyDisplays = new List<ProficiencyDisplay>();
 
-    private const int ProficiencyHUDWidth = 148;
-    private const int ProficiencyHUDHeight = 220;
+    private const int ProficiencyHUDWidth = 156;
+    private const int ProficiencyHUDHeight = 226;
 
     void Start()
     {
@@ -47,6 +47,7 @@ public class ProficiencyHUD : MonoBehaviour
         // I have the percentage in an integer, but width of the background is 42, so it should be percentage of 42
         proficiencyDisplay.xpBarProgressTransform.sizeDelta = new Vector2(percentage * 0.42f, 5);
         proficiencyDisplay.xpBarProgressTransform.anchoredPosition = new Vector2(percentage * 0.42f / 2, -2.5f);
+        proficiencyDisplay.FlashXPBar();
     }
 
     private void ConfigureProficiencyHUDBase(Canvas canvas, GameObject proficiencyHUDBase)
@@ -95,7 +96,7 @@ public class ProficiencyHUD : MonoBehaviour
             int row = i / columns;
             int col = i % columns;
 
-            proficiencyDisplays[i].proficiencyDisplayTransform.anchoredPosition = new Vector2((ProficiencyDisplay.ProficiencyDisplayXSize + 11) / 2 + (col * horizontalSpacing), -(ProficiencyDisplay.ProficiencyDisplayYSize + 10) / 2 - (row * verticalSpacing));
+            proficiencyDisplays[i].proficiencyDisplayTransform.anchoredPosition = new Vector2((ProficiencyDisplay.ProficiencyDisplayXSize + 19) / 2 + (col * horizontalSpacing), -(ProficiencyDisplay.ProficiencyDisplayYSize + 10) / 2 - (row * verticalSpacing));
         }
     }
 

@@ -2,14 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Awaken.TG.Main.General.StatTypes;
+using System.Collections;
 
 namespace ProficiencyHUD;
 
 public class ProficiencyDisplay : MonoBehaviour
 {
     public Image proficiencyIcon;
-    public TextMeshProUGUI levelLabel;
-    public TextMeshProUGUI xpLabel;
+    public Text levelLabel;
     private Sprite iconSprite;
     public RectTransform proficiencyDisplayTransform;
     private GameObject levelGameObject;
@@ -19,8 +19,11 @@ public class ProficiencyDisplay : MonoBehaviour
     public ProfStatType profStatType;
 
     private Sprite xpBarSprite = ProficiencyHUD.assets.LoadAsset<Sprite>("ProgressBar");
+    private Font rsFont = ProficiencyHUD.assets.LoadAsset<Font>("runescape_uf");
 
     public RectTransform xpBarProgressTransform;
+    private Image xpBarProgressImage;
+    private float _lastFlashTime = -1f;
     public static int ProficiencyDisplayXSize = 42;
     public static int ProficiencyDisplayYSize = 30;
 
@@ -38,6 +41,24 @@ public class ProficiencyDisplay : MonoBehaviour
 
         xpBarProgressTransform = xpBarProgressGameObject.GetComponent<RectTransform>();
     }
+    
+    public void FlashXPBar()
+    {
+        // Set a debounce
+        float now = Time.unscaledTime;
+        if (now - _lastFlashTime < 0.3f)
+            return;
+
+        _lastFlashTime = now;
+        StartCoroutine(FlashXPBarCoroutine());
+    }
+
+    private IEnumerator FlashXPBarCoroutine()
+    {
+        xpBarProgressImage.color = new Color(1f, 0.84f, 0f, 1f);
+        yield return new WaitForSecondsRealtime(0.2f);
+        xpBarProgressImage.color = Color.white;
+    }
 
     private void ConfigureProficiencyDisplay()
     {
@@ -45,7 +66,7 @@ public class ProficiencyDisplay : MonoBehaviour
         proficiencyDisplayTransform.sizeDelta = new Vector2(ProficiencyDisplayXSize, ProficiencyDisplayYSize);
 
         Image proficiencyBaseImage = gameObject.AddComponent<Image>();
-        proficiencyBaseImage.color = new Color(6f/255f, 6f/255f, 6f/255f, 1f);
+        proficiencyBaseImage.color = new Color(6f / 255f, 6f / 255f, 6f / 255f, 1f);
         proficiencyDisplayTransform.anchorMin = new Vector2(0, 1);
         proficiencyDisplayTransform.anchorMax = new Vector2(0, 1);
     }
@@ -69,11 +90,11 @@ public class ProficiencyDisplay : MonoBehaviour
         iconRect.anchorMax = new Vector2(0, 1);
 
         // Need to set the image size depending on the image
-        iconRect.sizeDelta = new Vector2(24, 24);
+        iconRect.sizeDelta = new Vector2(18, 18);
 
         // To set the icon to be at the top left corner,
         // set the x of the anchoredPosition to half the width of the icon and the y to -half the inferred height
-        iconRect.anchoredPosition = new Vector2(12, -12);
+        iconRect.anchoredPosition = new Vector2(12, -13);
     }
 
     private void ConfigureLevel(string level)
@@ -83,9 +104,10 @@ public class ProficiencyDisplay : MonoBehaviour
         // Attach to the parent
         levelGameObject.transform.SetParent(gameObject.transform, false);
 
-        levelLabel = levelGameObject.AddComponent<TextMeshProUGUI>();
-        levelLabel.fontSize = 12;
+        levelLabel = levelGameObject.AddComponent<Text>();
+        levelLabel.fontSize = 16;
         levelLabel.color = Color.white;
+        levelLabel.font = rsFont;
 
         RectTransform levelLabelTransform = levelLabel.GetComponent<RectTransform>();
         levelLabelTransform.anchorMin = new Vector2(0, 1);
@@ -131,8 +153,8 @@ public class ProficiencyDisplay : MonoBehaviour
         // Attach to the parent
         xpBarProgressGameObject.transform.SetParent(xpBarGameObject.transform, false);
 
-        Image proficiencyBaseImage = xpBarProgressGameObject.AddComponent<Image>();
-        proficiencyBaseImage.color = Color.white;
+        xpBarProgressImage = xpBarProgressGameObject.AddComponent<Image>();
+        xpBarProgressImage.color = Color.white;
 
         xpBarProgressTransform = xpBarProgressGameObject.GetComponent<RectTransform>();
         xpBarProgressTransform.anchorMin = new Vector2(0, 1);
