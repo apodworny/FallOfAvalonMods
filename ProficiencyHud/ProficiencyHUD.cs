@@ -9,12 +9,12 @@ namespace ProficiencyHUD;
 
 public class ProficiencyHUD : MonoBehaviour
 {
-    private Hero hero;
-
     public static AssetBundle assets;
-    private List<ProficiencyDisplay> proficiencyDisplays = new List<ProficiencyDisplay>();
 
+    private Hero _hero;    
+    private List<ProficiencyDisplay> _proficiencyDisplays = new List<ProficiencyDisplay>();
     private int _totalProficiencyLevel = 0;
+
     private const int ProficiencyHUDWidth = 156;
     private const int ProficiencyHUDHeight = 226;
 
@@ -28,24 +28,22 @@ public class ProficiencyHUD : MonoBehaviour
 
         ConfigureProficiencyHUDBase(canvas, proficiencyHUDBase);
         InitProficiencyDisplays(proficiencyHUDBase);
-
         ConfigureTotalProficiencyLevel(proficiencyHUDBase);
-
         RepositionProficiencyDisplays();
     }
 
     public void SetHero(Hero hero)
     {
-        this.hero = hero;
+        _hero = hero;
     }
 
     public void UpdateProgress(ProfStatType typeofProfession, float progress)
     {
         int percentage = Mathf.FloorToInt(progress * 100f);
 
-        ProficiencyDisplay proficiencyDisplay = proficiencyDisplays.Find(display => display.profStatType == typeofProfession);
+        ProficiencyDisplay proficiencyDisplay = _proficiencyDisplays.Find(display => display.profStatType == typeofProfession);
 
-        proficiencyDisplay.levelLabel.text = typeofProfession._getter(hero).BaseValue.ToString();
+        proficiencyDisplay.levelLabel.text = typeofProfession._getter(_hero).BaseValue.ToString();
 
         // I have the percentage in an integer, but width of the background is 42, so it should be percentage of 42
         proficiencyDisplay.xpBarProgressTransform.sizeDelta = new Vector2(percentage * 0.42f, 5);
@@ -70,12 +68,12 @@ public class ProficiencyHUD : MonoBehaviour
 
     private void InitProficiencyDisplays(GameObject proficiencyHUDBase)
     {
-        proficiencyDisplays.Clear();
+        _proficiencyDisplays.Clear();
 
         foreach (ProfStatType proficiency in ProfStatType.HeroProficiencies)
         {
-            string level = proficiency._getter(hero).BaseValue.ToString();
-            float progressToNextLevel = hero.ProficiencyStats.GetProgressToNextLevel(proficiency);
+            string level = proficiency._getter(_hero).BaseValue.ToString();
+            float progressToNextLevel = _hero.ProficiencyStats.GetProgressToNextLevel(proficiency);
 
             GameObject proficiencyDisplayGameObject = new GameObject($"{proficiency.EnumName}Display", typeof(RectTransform));
             proficiencyDisplayGameObject.transform.SetParent(proficiencyHUDBase.transform, false);
@@ -83,7 +81,7 @@ public class ProficiencyHUD : MonoBehaviour
             ProficiencyDisplay proficiencyDisplay = proficiencyDisplayGameObject.AddComponent<ProficiencyDisplay>();
             proficiencyDisplay.Initialize(proficiencyHUDBase, proficiency, progressToNextLevel, level);
 
-            proficiencyDisplays.Add(proficiencyDisplay);
+            _proficiencyDisplays.Add(proficiencyDisplay);
 
             // Update the total proficiency level
             _totalProficiencyLevel += int.Parse(proficiencyDisplay.levelLabel.text);
@@ -97,12 +95,12 @@ public class ProficiencyHUD : MonoBehaviour
         float verticalSpacing = 30f + 6f;
         int columns = 3;
 
-        for (int i = 0; i < proficiencyDisplays.Count; i++)
+        for (int i = 0; i < _proficiencyDisplays.Count; i++)
         {
             int row = i / columns;
             int col = i % columns;
 
-            proficiencyDisplays[i].proficiencyDisplayTransform.anchoredPosition = new Vector2((ProficiencyDisplay.ProficiencyDisplayXSize + 19) / 2 + (col * horizontalSpacing), -(ProficiencyDisplay.ProficiencyDisplayYSize + 10) / 2 - (row * verticalSpacing));
+            _proficiencyDisplays[i].proficiencyDisplayTransform.anchoredPosition = new Vector2((ProficiencyDisplay.ProficiencyDisplayXSize + 19) / 2 + (col * horizontalSpacing), -(ProficiencyDisplay.ProficiencyDisplayYSize + 10) / 2 - (row * verticalSpacing));
         }
     }
 

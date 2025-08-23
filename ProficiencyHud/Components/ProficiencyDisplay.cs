@@ -10,20 +10,21 @@ public class ProficiencyDisplay : MonoBehaviour
 {
     public Image proficiencyIcon;
     public Text levelLabel;
-    private Sprite iconSprite;
     public RectTransform proficiencyDisplayTransform;
-    private GameObject levelGameObject;
-    private GameObject iconGameObject;
-    private GameObject xpBarGameObject;
-    private GameObject xpBarProgressGameObject;
     public ProfStatType profStatType;
-
-    private Sprite xpBarSprite = ProficiencyHUD.assets.LoadAsset<Sprite>("ProgressBar");
-    private Font rsFont = ProficiencyHUD.assets.LoadAsset<Font>("runescape_uf");
-
     public RectTransform xpBarProgressTransform;
-    private Image xpBarProgressImage;
+
+    private Sprite _iconSprite;
+    private GameObject _levelGameObject;
+    private GameObject _iconGameObject;
+    private GameObject _xpBarGameObject;
+    private GameObject _xpBarProgressGameObject;
+    private Image _xpBarProgressImage;
     private float _lastFlashTime = -1f;
+
+    private Sprite _xpBarSprite = ProficiencyHUD.assets.LoadAsset<Sprite>("ProgressBar");
+    private Font _rsFont = ProficiencyHUD.assets.LoadAsset<Font>("runescape_uf");
+
     public static int ProficiencyDisplayXSize = 42;
     public static int ProficiencyDisplayYSize = 30;
 
@@ -39,7 +40,7 @@ public class ProficiencyDisplay : MonoBehaviour
         ConfigureXPBar();
         ConfigureXPBarProgress(progressToNextLevel);
 
-        xpBarProgressTransform = xpBarProgressGameObject.GetComponent<RectTransform>();
+        xpBarProgressTransform = _xpBarProgressGameObject.GetComponent<RectTransform>();
     }
     
     public void FlashXPBar()
@@ -55,9 +56,9 @@ public class ProficiencyDisplay : MonoBehaviour
 
     private IEnumerator FlashXPBarCoroutine()
     {
-        xpBarProgressImage.color = new Color(1f, 0.84f, 0f, 1f);
+        _xpBarProgressImage.color = new Color(1f, 0.84f, 0f, 1f);
         yield return new WaitForSecondsRealtime(0.2f);
-        xpBarProgressImage.color = Color.white;
+        _xpBarProgressImage.color = Color.white;
     }
 
     private void ConfigureProficiencyDisplay()
@@ -73,17 +74,17 @@ public class ProficiencyDisplay : MonoBehaviour
 
     private void ConfigureIcon()
     {
-        iconGameObject = new GameObject($"{profStatType.EnumName}Icon", typeof(RectTransform));
+        _iconGameObject = new GameObject($"{profStatType.EnumName}Icon", typeof(RectTransform));
 
         // Attach to the parent
-        iconGameObject.transform.SetParent(gameObject.transform, false);
+        _iconGameObject.transform.SetParent(gameObject.transform, false);
 
-        iconSprite = ProficiencyHUD.assets.LoadAsset<Sprite>(profStatType.EnumName);
+        _iconSprite = ProficiencyHUD.assets.LoadAsset<Sprite>(profStatType.EnumName);
 
-        Image iconImage = iconGameObject.AddComponent<Image>();
-        iconImage.sprite = iconSprite;
+        Image iconImage = _iconGameObject.AddComponent<Image>();
+        iconImage.sprite = _iconSprite;
 
-        RectTransform iconRect = iconGameObject.GetComponent<RectTransform>();
+        RectTransform iconRect = _iconGameObject.GetComponent<RectTransform>();
 
         // Set the anchor to the top left corner of its parent
         iconRect.anchorMin = new Vector2(0, 1);
@@ -99,15 +100,15 @@ public class ProficiencyDisplay : MonoBehaviour
 
     private void ConfigureLevel(string level)
     {
-        levelGameObject = new GameObject($"{profStatType.EnumName}LevelLabel", typeof(RectTransform));
+        _levelGameObject = new GameObject($"{profStatType.EnumName}LevelLabel", typeof(RectTransform));
 
         // Attach to the parent
-        levelGameObject.transform.SetParent(gameObject.transform, false);
+        _levelGameObject.transform.SetParent(gameObject.transform, false);
 
-        levelLabel = levelGameObject.AddComponent<Text>();
+        levelLabel = _levelGameObject.AddComponent<Text>();
         levelLabel.fontSize = 16;
         levelLabel.color = Color.white;
-        levelLabel.font = rsFont;
+        levelLabel.font = _rsFont;
 
         RectTransform levelLabelTransform = levelLabel.GetComponent<RectTransform>();
         levelLabelTransform.anchorMin = new Vector2(0, 1);
@@ -124,15 +125,15 @@ public class ProficiencyDisplay : MonoBehaviour
 
     private void ConfigureXPBar()
     {
-        xpBarGameObject = new GameObject($"{profStatType.EnumName}XPBar", typeof(RectTransform));
+        _xpBarGameObject = new GameObject($"{profStatType.EnumName}XPBar", typeof(RectTransform));
 
         // Attach to the parent
-        xpBarGameObject.transform.SetParent(gameObject.transform, false);
+        _xpBarGameObject.transform.SetParent(gameObject.transform, false);
 
-        Image xpBarImage = xpBarGameObject.AddComponent<Image>();
-        xpBarImage.sprite = xpBarSprite;
+        Image xpBarImage = _xpBarGameObject.AddComponent<Image>();
+        xpBarImage.sprite = _xpBarSprite;
 
-        RectTransform agilityXPBackgroundRect = xpBarGameObject.GetComponent<RectTransform>();
+        RectTransform agilityXPBackgroundRect = _xpBarGameObject.GetComponent<RectTransform>();
 
         // Set the anchor to the top left corner of its parent
         agilityXPBackgroundRect.anchorMin = new Vector2(0, 1);
@@ -148,15 +149,15 @@ public class ProficiencyDisplay : MonoBehaviour
 
     private void ConfigureXPBarProgress(float progressToNextLevel)
     {
-        xpBarProgressGameObject = new GameObject($"{profStatType.EnumName}XPBarProgress", typeof(RectTransform));
+        _xpBarProgressGameObject = new GameObject($"{profStatType.EnumName}XPBarProgress", typeof(RectTransform));
 
         // Attach to the parent
-        xpBarProgressGameObject.transform.SetParent(xpBarGameObject.transform, false);
+        _xpBarProgressGameObject.transform.SetParent(_xpBarGameObject.transform, false);
 
-        xpBarProgressImage = xpBarProgressGameObject.AddComponent<Image>();
-        xpBarProgressImage.color = Color.white;
+        _xpBarProgressImage = _xpBarProgressGameObject.AddComponent<Image>();
+        _xpBarProgressImage.color = Color.white;
 
-        xpBarProgressTransform = xpBarProgressGameObject.GetComponent<RectTransform>();
+        xpBarProgressTransform = _xpBarProgressGameObject.GetComponent<RectTransform>();
         xpBarProgressTransform.anchorMin = new Vector2(0, 1);
         xpBarProgressTransform.anchorMax = new Vector2(0, 1);
         xpBarProgressTransform.sizeDelta = new Vector2(progressToNextLevel * 42f, 5);
