@@ -3,6 +3,7 @@ using UnityEngine;
 using Awaken.TG.Main.General.StatTypes;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Unity.Entities.UniversalDelegates;
 
 namespace ProficiencyHUD;
 
@@ -12,6 +13,9 @@ public class ProficiencyHUD : MonoBehaviour
 
     public static AssetBundle assets;
     private List<ProficiencyDisplay> proficiencyDisplays = new List<ProficiencyDisplay>();
+
+    private const int ProficiencyHUDWidth = 148;
+    private const int ProficiencyHUDHeight = 220;
 
     void Start()
     {
@@ -51,13 +55,13 @@ public class ProficiencyHUD : MonoBehaviour
         proficiencyHUDBase.transform.SetParent(canvas.transform, false);
 
         RectTransform proficiencyHUDTransform = proficiencyHUDBase.GetComponent<RectTransform>();
-        proficiencyHUDTransform.sizeDelta = new Vector2(300, 400);
+        proficiencyHUDTransform.sizeDelta = new Vector2(ProficiencyHUDWidth, ProficiencyHUDHeight);
 
         Image proficiencyBaseImage = proficiencyHUDBase.AddComponent<Image>();
-        proficiencyBaseImage.color = new Color(0.1f, 0.1f, 0.1f, 0.8f);
+        proficiencyBaseImage.color = new Color(6f/255f, 6f/255f, 6f/255f, 1f);
         proficiencyHUDTransform.anchorMin = new Vector2(1, 0.5f);
         proficiencyHUDTransform.anchorMax = new Vector2(1, 0.5f);
-        proficiencyHUDTransform.anchoredPosition = new Vector2(-150, 0);
+        proficiencyHUDTransform.anchoredPosition = new Vector2(-(ProficiencyHUDWidth / 2) - 5, 0);
     }
 
     private void InitProficiencyDisplays(GameObject proficiencyHUDBase)
@@ -81,8 +85,9 @@ public class ProficiencyHUD : MonoBehaviour
 
     private void RepositionProficiencyDisplays()
     {
-        float verticalSpacing = 44f;
-        float horizontalSpacing = 44f;
+        // TODO: move 42 and 30 to consts folder? comes from ProficiencyDisplayXSize and ProficiencyDisplayYSize
+        float horizontalSpacing = 42f + 6f;
+        float verticalSpacing = 30f + 6f;
         int columns = 3;
 
         for (int i = 0; i < proficiencyDisplays.Count; i++)
@@ -90,7 +95,7 @@ public class ProficiencyHUD : MonoBehaviour
             int row = i / columns;
             int col = i % columns;
 
-            proficiencyDisplays[i].proficiencyDisplayTransform.anchoredPosition = new Vector2((ProficiencyDisplay.ProficiencyDisplayXSize / 2) + (col * horizontalSpacing), -(ProficiencyDisplay.ProficiencyDisplayYSize / 2) - (row * verticalSpacing));
+            proficiencyDisplays[i].proficiencyDisplayTransform.anchoredPosition = new Vector2((ProficiencyDisplay.ProficiencyDisplayXSize + 11) / 2 + (col * horizontalSpacing), -(ProficiencyDisplay.ProficiencyDisplayYSize + 10) / 2 - (row * verticalSpacing));
         }
     }
 

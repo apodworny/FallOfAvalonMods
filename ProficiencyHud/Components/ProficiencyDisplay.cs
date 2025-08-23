@@ -21,7 +21,7 @@ public class ProficiencyDisplay : MonoBehaviour
     private Sprite xpBarSprite = ProficiencyHUD.assets.LoadAsset<Sprite>("ProgressBar");
 
     public RectTransform xpBarProgressTransform;
-    public static int ProficiencyDisplayXSize = 50;
+    public static int ProficiencyDisplayXSize = 42;
     public static int ProficiencyDisplayYSize = 30;
 
     public void Initialize(GameObject proficiencyHUDBase, ProfStatType profStatType, float progressToNextLevel, string level)
@@ -84,7 +84,7 @@ public class ProficiencyDisplay : MonoBehaviour
         levelGameObject.transform.SetParent(gameObject.transform, false);
 
         levelLabel = levelGameObject.AddComponent<TextMeshProUGUI>();
-        levelLabel.fontSize = 14;
+        levelLabel.fontSize = 12;
         levelLabel.color = Color.white;
 
         RectTransform levelLabelTransform = levelLabel.GetComponent<RectTransform>();
@@ -95,7 +95,7 @@ public class ProficiencyDisplay : MonoBehaviour
         // set the x of the anchoredPosition to the width of the icon plus half the width of the label
         // and the y to minus half the height
         levelLabelTransform.sizeDelta = new Vector2(20, 20);
-        levelLabelTransform.anchoredPosition = new Vector2(24 + 10, -10);
+        levelLabelTransform.anchoredPosition = new Vector2(24 + 12, -20);
 
         levelLabel.text = level;
     }
@@ -121,7 +121,7 @@ public class ProficiencyDisplay : MonoBehaviour
         // To set the icon to be at the top left corner,
         // Set the x of the anchoredPosition to half the width of the icon
         // and the y to minus the inferred height of the icon minus half the height
-        agilityXPBackgroundRect.anchoredPosition = new Vector2(21f, -24f - 2.5f);
+        agilityXPBackgroundRect.anchoredPosition = new Vector2(21f, -25f - 2.5f);
     }
 
     private void ConfigureXPBarProgress(float progressToNextLevel)
