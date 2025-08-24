@@ -23,6 +23,13 @@ public class ProficiencyHUD : MonoBehaviour
 
     void Start()
     {
+        // Destroy any existing ProficiencyHUDBase GameObject
+        var existingHUD = GameObject.Find("ProficiencyHUDBase");
+        if (existingHUD != null)
+        {
+            Destroy(existingHUD);
+        }
+
         LoadAssetBundle();
         GameObject proficiencyHUDBase = new GameObject("ProficiencyHUDBase", typeof(RectTransform));
 
@@ -78,8 +85,8 @@ public class ProficiencyHUD : MonoBehaviour
 
         Image proficiencyBaseImage = proficiencyHUDBase.AddComponent<Image>();
         proficiencyBaseImage.color = BackgroundColor;
-        proficiencyHUDTransform.anchorMin = new Vector2(1f, 0.4f);
-        proficiencyHUDTransform.anchorMax = new Vector2(1f, 0.4f);
+        proficiencyHUDTransform.anchorMin = new Vector2(1f, Plugin.PluginConfig.ProficiencyHUDVerticalPosition.Value);
+        proficiencyHUDTransform.anchorMax = new Vector2(1f, Plugin.PluginConfig.ProficiencyHUDVerticalPosition.Value);
         proficiencyHUDTransform.anchoredPosition = new Vector2(-(ProficiencyHUDWidth / 2f), 0f);
     }
 
