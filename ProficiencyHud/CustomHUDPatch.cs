@@ -1,9 +1,5 @@
 using Awaken.TG.Main.Heroes;
 using HarmonyLib;
-using Awaken.TG.Main.Character;
-using Awaken.TG.Main.General.StatTypes;
-using Awaken.TG.Main.UI.HUD.AdvancedNotifications;
-using Awaken.TG.Main.UI.HUD.AdvancedNotifications.LeftScreen.Proficiency;
 using UnityEngine;
 
 namespace ProficiencyHUD;
