@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using Awaken.TG.Main.General.StatTypes;
 using System.Collections;
 
