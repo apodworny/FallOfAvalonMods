@@ -14,6 +14,7 @@ public class ProficiencyHUD : MonoBehaviour
     private Hero _hero;    
     private List<ProficiencyDisplay> _proficiencyDisplays = new List<ProficiencyDisplay>();
     private int _totalProficiencyLevel = 0;
+    private Text totalLevelLabel;
 
     private const int ProficiencyHUDWidth = 156;
     private const int ProficiencyHUDHeight = 226;
@@ -43,6 +44,23 @@ public class ProficiencyHUD : MonoBehaviour
 
         ProficiencyDisplay proficiencyDisplay = _proficiencyDisplays.Find(display => display.profStatType == typeofProfession);
 
+        float levelAfterXPApplied = typeofProfession._getter(_hero).BaseValue;
+        float oldLevel = float.Parse(proficiencyDisplay.levelLabel.text);
+        Plugin.Log.LogInfo($"Old Level: {oldLevel}, New Level: {levelAfterXPApplied}");
+
+        // Update the total count of proficiency levels if the level increased
+        if (levelAfterXPApplied > oldLevel)
+        {
+            Plugin.Log.LogInfo($"Adding new level");
+            _totalProficiencyLevel += 1;
+
+            if (totalLevelLabel != null)
+            {
+                totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
+            }
+            // I think this works to add a new level to _totalProficiencyLevel, but it just updates the number, not the label
+        }
+
         proficiencyDisplay.levelLabel.text = typeofProfession._getter(_hero).BaseValue.ToString();
 
         // I have the percentage in an integer, but width of the background is 42, so it should be percentage of 42
@@ -61,9 +79,9 @@ public class ProficiencyHUD : MonoBehaviour
 
         Image proficiencyBaseImage = proficiencyHUDBase.AddComponent<Image>();
         proficiencyBaseImage.color = new Color(6f/255f, 6f/255f, 6f/255f, 1f);
-        proficiencyHUDTransform.anchorMin = new Vector2(1, 0.5f);
-        proficiencyHUDTransform.anchorMax = new Vector2(1, 0.5f);
-        proficiencyHUDTransform.anchoredPosition = new Vector2(-(ProficiencyHUDWidth / 2) - 5, 0);
+        proficiencyHUDTransform.anchorMin = new Vector2(1, 0.35f);
+        proficiencyHUDTransform.anchorMax = new Vector2(1, 0.35f);
+        proficiencyHUDTransform.anchoredPosition = new Vector2(-(ProficiencyHUDWidth / 2), 0);
     }
 
     private void InitProficiencyDisplays(GameObject proficiencyHUDBase)
@@ -111,17 +129,17 @@ public class ProficiencyHUD : MonoBehaviour
         // Attach the totalProficiencyLevelGameObject to the proficiencyHUDBase
         totalProficiencyLevelGameObject.transform.SetParent(proficiencyHUDBase.transform, false);
 
-        Text levelLabel = totalProficiencyLevelGameObject.AddComponent<Text>();
-        levelLabel.fontSize = 16;
-        levelLabel.color = Color.white;
-        levelLabel.font = assets.LoadAsset<Font>("runescape_uf");
-        if (levelLabel.font == null)
+        totalLevelLabel = totalProficiencyLevelGameObject.AddComponent<Text>();
+        totalLevelLabel.fontSize = 16;
+        totalLevelLabel.color = Color.white;
+        totalLevelLabel.font = assets.LoadAsset<Font>("runescape_uf");
+        if (totalLevelLabel.font == null)
         {
             Plugin.Log.LogInfo("Font failed to load from asset bundle!");
         }
-        levelLabel.alignment = TextAnchor.MiddleCenter;
+        totalLevelLabel.alignment = TextAnchor.MiddleCenter;
 
-        RectTransform totalLevelLabelTransform = levelLabel.GetComponent<RectTransform>();
+        RectTransform totalLevelLabelTransform = totalLevelLabel.GetComponent<RectTransform>();
         totalLevelLabelTransform.anchorMin = new Vector2(1, 0);
         totalLevelLabelTransform.anchorMax = new Vector2(1, 0);
 
@@ -131,7 +149,7 @@ public class ProficiencyHUD : MonoBehaviour
         totalLevelLabelTransform.sizeDelta = new Vector2(50, 50);
         totalLevelLabelTransform.anchoredPosition = new Vector2(-30, 23);
 
-        levelLabel.text = $"Total:\n{_totalProficiencyLevel}";
+        totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
     }
 
     private void LoadAssetBundle()
