@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Mod.props"/>
+  <PropertyGroup>
+    <AssemblyName>DisplayEnemyLevels</AssemblyName>
+    <Product>DisplayEnemyLevels</Product>
+    <Version>1.0.0</Version>
+    <RootNamespace>DisplayEnemyLevels</RootNamespace>
+  </PropertyGroup>
+</Project>
