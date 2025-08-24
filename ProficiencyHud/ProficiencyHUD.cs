@@ -11,6 +11,8 @@ public class ProficiencyHUD : MonoBehaviour
 {
     public static AssetBundle assets;
 
+    public static readonly Color BackgroundColor = new(6f / 255f, 6f / 255f, 6f / 255f, 1f);
+
     private Hero _hero;    
     private List<ProficiencyDisplay> _proficiencyDisplays = new List<ProficiencyDisplay>();
     private int _totalProficiencyLevel = 0;
@@ -18,7 +20,6 @@ public class ProficiencyHUD : MonoBehaviour
     
     private const float ProficiencyHUDWidth = 156f;
     private const float ProficiencyHUDHeight = 226f;
-    private static readonly Color BackgroundColor = new(6f / 255f, 6f / 255f, 6f / 255f, 1f);
 
     void Start()
     {
