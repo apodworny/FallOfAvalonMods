@@ -67,7 +67,7 @@ public class ProficiencyDisplay : MonoBehaviour
         proficiencyDisplayTransform.sizeDelta = new Vector2(ProficiencyDisplayXSize, ProficiencyDisplayYSize);
 
         Image proficiencyBaseImage = gameObject.AddComponent<Image>();
-        proficiencyBaseImage.color = new Color(6f / 255f, 6f / 255f, 6f / 255f, 1f);
+        proficiencyBaseImage.color = ProficiencyHUD.BackgroundColor;
         proficiencyDisplayTransform.anchorMin = new Vector2(0, 1);
         proficiencyDisplayTransform.anchorMax = new Vector2(0, 1);
     }
