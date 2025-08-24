@@ -15,9 +15,10 @@ public class ProficiencyHUD : MonoBehaviour
     private List<ProficiencyDisplay> _proficiencyDisplays = new List<ProficiencyDisplay>();
     private int _totalProficiencyLevel = 0;
     private Text totalLevelLabel;
-
+    
     private const float ProficiencyHUDWidth = 156f;
     private const float ProficiencyHUDHeight = 226f;
+    private static readonly Color BackgroundColor = new(6f / 255f, 6f / 255f, 6f / 255f, 1f);
 
     void Start()
     {
@@ -75,7 +76,7 @@ public class ProficiencyHUD : MonoBehaviour
         proficiencyHUDTransform.sizeDelta = new Vector2(ProficiencyHUDWidth, ProficiencyHUDHeight);
 
         Image proficiencyBaseImage = proficiencyHUDBase.AddComponent<Image>();
-        proficiencyBaseImage.color = new Color(6f/255f, 6f/255f, 6f/255f, 1f);
+        proficiencyBaseImage.color = BackgroundColor;
         proficiencyHUDTransform.anchorMin = new Vector2(1f, 0.4f);
         proficiencyHUDTransform.anchorMax = new Vector2(1f, 0.4f);
         proficiencyHUDTransform.anchoredPosition = new Vector2(-(ProficiencyHUDWidth / 2f), 0f);
