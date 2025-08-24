@@ -16,8 +16,8 @@ public class ProficiencyHUD : MonoBehaviour
     private int _totalProficiencyLevel = 0;
     private Text totalLevelLabel;
 
-    private const int ProficiencyHUDWidth = 156;
-    private const int ProficiencyHUDHeight = 226;
+    private const float ProficiencyHUDWidth = 156f;
+    private const float ProficiencyHUDHeight = 226f;
 
     void Start()
     {
@@ -46,25 +46,22 @@ public class ProficiencyHUD : MonoBehaviour
 
         float levelAfterXPApplied = typeofProfession._getter(_hero).BaseValue;
         float oldLevel = float.Parse(proficiencyDisplay.levelLabel.text);
-        Plugin.Log.LogInfo($"Old Level: {oldLevel}, New Level: {levelAfterXPApplied}");
 
         // Update the total count of proficiency levels if the level increased
         if (levelAfterXPApplied > oldLevel)
         {
-            Plugin.Log.LogInfo($"Adding new level");
             _totalProficiencyLevel += 1;
 
             if (totalLevelLabel != null)
             {
                 totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
             }
-            // I think this works to add a new level to _totalProficiencyLevel, but it just updates the number, not the label
         }
 
         proficiencyDisplay.levelLabel.text = typeofProfession._getter(_hero).BaseValue.ToString();
 
-        // I have the percentage in an integer, but width of the background is 42, so it should be percentage of 42
-        proficiencyDisplay.xpBarProgressTransform.sizeDelta = new Vector2(percentage * 0.42f, 5);
+        // Percentage is in an integer, but width of the background is 42, so it should be percentage of 42
+        proficiencyDisplay.xpBarProgressTransform.sizeDelta = new Vector2(percentage * 0.42f, 5f);
         proficiencyDisplay.xpBarProgressTransform.anchoredPosition = new Vector2(percentage * 0.42f / 2, -2.5f);
         proficiencyDisplay.FlashXPBar();
     }
@@ -79,9 +76,9 @@ public class ProficiencyHUD : MonoBehaviour
 
         Image proficiencyBaseImage = proficiencyHUDBase.AddComponent<Image>();
         proficiencyBaseImage.color = new Color(6f/255f, 6f/255f, 6f/255f, 1f);
-        proficiencyHUDTransform.anchorMin = new Vector2(1, 0.35f);
-        proficiencyHUDTransform.anchorMax = new Vector2(1, 0.35f);
-        proficiencyHUDTransform.anchoredPosition = new Vector2(-(ProficiencyHUDWidth / 2), 0);
+        proficiencyHUDTransform.anchorMin = new Vector2(1f, 0.4f);
+        proficiencyHUDTransform.anchorMax = new Vector2(1f, 0.4f);
+        proficiencyHUDTransform.anchoredPosition = new Vector2(-(ProficiencyHUDWidth / 2f), 0f);
     }
 
     private void InitProficiencyDisplays(GameObject proficiencyHUDBase)
@@ -108,7 +105,6 @@ public class ProficiencyHUD : MonoBehaviour
 
     private void RepositionProficiencyDisplays()
     {
-        // TODO: move 42 and 30 to consts folder? comes from ProficiencyDisplayXSize and ProficiencyDisplayYSize
         float horizontalSpacing = 42f + 6f;
         float verticalSpacing = 30f + 6f;
         int columns = 3;
@@ -118,7 +114,7 @@ public class ProficiencyHUD : MonoBehaviour
             int row = i / columns;
             int col = i % columns;
 
-            _proficiencyDisplays[i].proficiencyDisplayTransform.anchoredPosition = new Vector2((ProficiencyDisplay.ProficiencyDisplayXSize + 19) / 2 + (col * horizontalSpacing), -(ProficiencyDisplay.ProficiencyDisplayYSize + 10) / 2 - (row * verticalSpacing));
+            _proficiencyDisplays[i].proficiencyDisplayTransform.anchoredPosition = new Vector2((ProficiencyDisplay.ProficiencyDisplayXSize + 19) / 2f + (col * horizontalSpacing), -(ProficiencyDisplay.ProficiencyDisplayYSize + 10) / 2f - (row * verticalSpacing));
         }
     }
 
@@ -140,14 +136,14 @@ public class ProficiencyHUD : MonoBehaviour
         totalLevelLabel.alignment = TextAnchor.MiddleCenter;
 
         RectTransform totalLevelLabelTransform = totalLevelLabel.GetComponent<RectTransform>();
-        totalLevelLabelTransform.anchorMin = new Vector2(1, 0);
-        totalLevelLabelTransform.anchorMax = new Vector2(1, 0);
+        totalLevelLabelTransform.anchorMin = new Vector2(1f, 0f);
+        totalLevelLabelTransform.anchorMax = new Vector2(1f, 0f);
 
         // To set the label to be beside the icon,
         // set the x of the anchoredPosition to the width of the icon plus half the width of the label
         // and the y to minus half the height
-        totalLevelLabelTransform.sizeDelta = new Vector2(50, 50);
-        totalLevelLabelTransform.anchoredPosition = new Vector2(-30, 23);
+        totalLevelLabelTransform.sizeDelta = new Vector2(50f, 50f);
+        totalLevelLabelTransform.anchoredPosition = new Vector2(-30f, 23f);
 
         totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
     }

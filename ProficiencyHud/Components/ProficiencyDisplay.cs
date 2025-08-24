@@ -87,15 +87,13 @@ public class ProficiencyDisplay : MonoBehaviour
         RectTransform iconRect = _iconGameObject.GetComponent<RectTransform>();
 
         // Set the anchor to the top left corner of its parent
-        iconRect.anchorMin = new Vector2(0, 1);
-        iconRect.anchorMax = new Vector2(0, 1);
-
-        // Need to set the image size depending on the image
-        iconRect.sizeDelta = new Vector2(18, 18);
+        iconRect.anchorMin = new Vector2(0f, 1f);
+        iconRect.anchorMax = new Vector2(0f, 1f);
+        iconRect.sizeDelta = new Vector2(18f, 18f);
 
         // To set the icon to be at the top left corner,
         // set the x of the anchoredPosition to half the width of the icon and the y to -half the inferred height
-        iconRect.anchoredPosition = new Vector2(12, -13);
+        iconRect.anchoredPosition = new Vector2(12f, -13f);
     }
 
     private void ConfigureLevel(string level)
@@ -111,14 +109,14 @@ public class ProficiencyDisplay : MonoBehaviour
         levelLabel.font = _rsFont;
 
         RectTransform levelLabelTransform = levelLabel.GetComponent<RectTransform>();
-        levelLabelTransform.anchorMin = new Vector2(0, 1);
-        levelLabelTransform.anchorMax = new Vector2(0, 1);
+        levelLabelTransform.anchorMin = new Vector2(0f, 1f);
+        levelLabelTransform.anchorMax = new Vector2(0f, 1f);
 
         // To set the label to be beside the icon,
         // set the x of the anchoredPosition to the width of the icon plus half the width of the label
         // and the y to minus half the height
-        levelLabelTransform.sizeDelta = new Vector2(20, 20);
-        levelLabelTransform.anchoredPosition = new Vector2(24 + 12, -20);
+        levelLabelTransform.sizeDelta = new Vector2(20f, 20f);
+        levelLabelTransform.anchoredPosition = new Vector2(24f + 12f, -20f);
 
         levelLabel.text = level;
     }
@@ -136,10 +134,10 @@ public class ProficiencyDisplay : MonoBehaviour
         RectTransform agilityXPBackgroundRect = _xpBarGameObject.GetComponent<RectTransform>();
 
         // Set the anchor to the top left corner of its parent
-        agilityXPBackgroundRect.anchorMin = new Vector2(0, 1);
-        agilityXPBackgroundRect.anchorMax = new Vector2(0, 1);
+        agilityXPBackgroundRect.anchorMin = new Vector2(0f, 1f);
+        agilityXPBackgroundRect.anchorMax = new Vector2(0f, 1f);
 
-        agilityXPBackgroundRect.sizeDelta = new Vector2(42, 5);
+        agilityXPBackgroundRect.sizeDelta = new Vector2(42f, 5f);
 
         // To set the icon to be at the top left corner,
         // Set the x of the anchoredPosition to half the width of the icon
@@ -158,9 +156,9 @@ public class ProficiencyDisplay : MonoBehaviour
         _xpBarProgressImage.color = Color.white;
 
         xpBarProgressTransform = _xpBarProgressGameObject.GetComponent<RectTransform>();
-        xpBarProgressTransform.anchorMin = new Vector2(0, 1);
-        xpBarProgressTransform.anchorMax = new Vector2(0, 1);
-        xpBarProgressTransform.sizeDelta = new Vector2(progressToNextLevel * 42f, 5);
-        xpBarProgressTransform.anchoredPosition = new Vector2(progressToNextLevel * 42f / 2, -2.5f);
+        xpBarProgressTransform.anchorMin = new Vector2(0f, 1f);
+        xpBarProgressTransform.anchorMax = new Vector2(0f, 1f);
+        xpBarProgressTransform.sizeDelta = new Vector2(progressToNextLevel * 42f, 5f);
+        xpBarProgressTransform.anchoredPosition = new Vector2(progressToNextLevel * 42f / 2f, -2.5f);
     }
 }
