@@ -71,7 +71,12 @@ public class ProficiencyHUD : MonoBehaviour
         // Percentage is in an integer, but width of the background is 42, so it should be percentage of 42
         proficiencyDisplay.xpBarProgressTransform.sizeDelta = new Vector2(percentage * 0.42f, 5f);
         proficiencyDisplay.xpBarProgressTransform.anchoredPosition = new Vector2(percentage * 0.42f / 2, -2.5f);
-        proficiencyDisplay.FlashXPBar();
+
+        // If experience gain animation is enabled, run the animation
+        if (Plugin.PluginConfig.ExpGainAnimationEnabled.Value)
+        {
+            proficiencyDisplay.FlashXPBar();
+        }
     }
 
     private void ConfigureProficiencyHUDBase(Canvas canvas, GameObject proficiencyHUDBase)
