@@ -64,9 +64,6 @@ public class ProficiencyDisplay : MonoBehaviour
     {
         proficiencyDisplayTransform = GetComponent<RectTransform>();
         proficiencyDisplayTransform.sizeDelta = new Vector2(ProficiencyDisplayXSize, ProficiencyDisplayYSize);
-
-        Image proficiencyBaseImage = gameObject.AddComponent<Image>();
-        proficiencyBaseImage.color = ProficiencyHUD.BackgroundColor;
         proficiencyDisplayTransform.anchorMin = new Vector2(0, 1);
         proficiencyDisplayTransform.anchorMax = new Vector2(0, 1);
     }
@@ -82,6 +79,7 @@ public class ProficiencyDisplay : MonoBehaviour
 
         Image iconImage = _iconGameObject.AddComponent<Image>();
         iconImage.sprite = _iconSprite;
+        iconImage.preserveAspect = true;
 
         RectTransform iconRect = _iconGameObject.GetComponent<RectTransform>();
 

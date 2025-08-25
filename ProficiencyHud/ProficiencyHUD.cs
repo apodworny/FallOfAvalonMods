@@ -17,8 +17,8 @@ public class ProficiencyHUD : MonoBehaviour
     private int _totalProficiencyLevel = 0;
     private Text totalLevelLabel;
     
-    private const float ProficiencyHUDWidth = 156f;
-    private const float ProficiencyHUDHeight = 226f;
+    private const float ProficiencyHUDWidth = 176f;
+    private const float ProficiencyHUDHeight = 246f;
 
     void Start()
     {
@@ -88,7 +88,8 @@ public class ProficiencyHUD : MonoBehaviour
         proficiencyHUDTransform.sizeDelta = new Vector2(ProficiencyHUDWidth, ProficiencyHUDHeight);
 
         Image proficiencyBaseImage = proficiencyHUDBase.AddComponent<Image>();
-        proficiencyBaseImage.color = BackgroundColor;
+        Sprite sprite = assets.LoadAsset<Sprite>("bg2");
+        proficiencyBaseImage.sprite = sprite;
         proficiencyHUDTransform.anchorMin = new Vector2(1f, Plugin.PluginConfig.ProficiencyHUDVerticalPosition.Value);
         proficiencyHUDTransform.anchorMax = new Vector2(1f, Plugin.PluginConfig.ProficiencyHUDVerticalPosition.Value);
         proficiencyHUDTransform.anchoredPosition = new Vector2(-(ProficiencyHUDWidth / 2f), 0f);
@@ -127,7 +128,7 @@ public class ProficiencyHUD : MonoBehaviour
             int row = i / columns;
             int col = i % columns;
 
-            _proficiencyDisplays[i].proficiencyDisplayTransform.anchoredPosition = new Vector2((ProficiencyDisplay.ProficiencyDisplayXSize + 19) / 2f + (col * horizontalSpacing), -(ProficiencyDisplay.ProficiencyDisplayYSize + 10) / 2f - (row * verticalSpacing));
+            _proficiencyDisplays[i].proficiencyDisplayTransform.anchoredPosition = new Vector2((ProficiencyDisplay.ProficiencyDisplayXSize + 39) / 2f + (col * horizontalSpacing), -(ProficiencyDisplay.ProficiencyDisplayYSize + 30) / 2f - (row * verticalSpacing));
         }
     }
 
@@ -156,7 +157,7 @@ public class ProficiencyHUD : MonoBehaviour
         // set the x of the anchoredPosition to the width of the icon plus half the width of the label
         // and the y to minus half the height
         totalLevelLabelTransform.sizeDelta = new Vector2(50f, 50f);
-        totalLevelLabelTransform.anchoredPosition = new Vector2(-30f, 23f);
+        totalLevelLabelTransform.anchoredPosition = new Vector2(-40f, 33f);
 
         totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
     }
