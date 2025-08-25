@@ -84,6 +84,13 @@ public class ProficiencyHUD : MonoBehaviour
         // Attach the proficiencyHUDBase to the hero's canvas
         proficiencyHUDBase.transform.SetParent(canvas.transform, false);
 
+        // Set the opacity
+        CanvasGroup canvasGroup = proficiencyHUDBase.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+            canvasGroup = proficiencyHUDBase.AddComponent<CanvasGroup>();
+
+        canvasGroup.alpha = Plugin.PluginConfig.HUDOpacity.Value;
+
         RectTransform proficiencyHUDTransform = proficiencyHUDBase.GetComponent<RectTransform>();
         proficiencyHUDTransform.sizeDelta = new Vector2(ProficiencyHUDWidth, ProficiencyHUDHeight);
 

@@ -4,6 +4,7 @@ public class PluginConfig
 {
     public ConfigEntry<float> ProficiencyHUDVerticalPosition { get; private set; }
     public ConfigEntry<bool> ExpGainAnimationEnabled { get; private set; }
+    public ConfigEntry<float> HUDOpacity { get; private set; }
 
     public PluginConfig(ConfigFile config)
     {
@@ -25,6 +26,14 @@ public class PluginConfig
                 True means the animation (the colour change of the exp bar) is enabled, false disables it.
                 """;
             ExpGainAnimationEnabled = config.Bind(AnimationCategory, nameof(ExpGainAnimationEnabled), true, expGainAnimationEnabledDescription);
+
+            const string OpacityCategory = "ProficiencyHUDOpacity";
+            const string hudOpacityDescription =
+                """
+                The opacity of the proficiency HUD.
+                Value must be within 0 and 1, where 0 is fully transparent and 1 is fully visible.
+                """;
+            HUDOpacity = config.Bind(OpacityCategory, nameof(HUDOpacity), 0.8f, hudOpacityDescription);
         }
         finally
         {
