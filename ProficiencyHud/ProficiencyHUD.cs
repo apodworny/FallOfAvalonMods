@@ -3,6 +3,9 @@ using UnityEngine;
 using Awaken.TG.Main.General.StatTypes;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Awaken.TG.MVC;
+using Awaken.TG.Main.AudioSystem.Notifications;
+using Awaken.TG.Main.Scenes.SceneConstructors;
 
 namespace ProficiencyHUD;
 
@@ -60,10 +63,12 @@ public class ProficiencyHUD : MonoBehaviour
         {
             _totalProficiencyLevel += 1;
 
-            if (totalLevelLabel != null)
-            {
-                totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
-            }
+            // Play a notification sound when leveling up a proficiency
+            NotificationSoundEvent soundEvent = CommonReferences.Get.AudioConfig.ProficiencyAudio;
+            NotificationsAudioService audioService = World.Services.Get<NotificationsAudioService>();
+            audioService?.PlayNotificationSound(soundEvent);
+
+            totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
         }
 
         proficiencyDisplay.levelLabel.text = typeofProfession._getter(_hero).BaseValue.ToString();
