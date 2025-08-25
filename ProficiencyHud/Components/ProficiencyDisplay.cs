@@ -81,6 +81,27 @@ public class ProficiencyDisplay : MonoBehaviour
         iconImage.sprite = _iconSprite;
         iconImage.preserveAspect = true;
 
+        if (profStatType.Category == ProficiencyCategory.Strength)
+        {
+            iconImage.color = new Color(1f, 0.3f, 0.3f, 0.8f);
+        }
+        else if (profStatType.Category == ProficiencyCategory.Endurance)
+        {
+            iconImage.color = new Color(1f, 47f / 51f, 0.015686275f, 0.8f);
+        }
+        else if (profStatType.Category == ProficiencyCategory.Dexterity)
+        {
+            iconImage.color = new Color(0f, 1f, 0f, 0.8f);
+        }
+        else if (profStatType.Category == ProficiencyCategory.Spirituality)
+        {
+            iconImage.color = new Color(01f, 0.5f, 1f, 0.8f);
+        }
+        else if (profStatType.Category == ProficiencyCategory.Practicality)
+        {
+            iconImage.color = new Color(0.3f, 0.7f, 1f, 1f);
+        }
+
         RectTransform iconRect = _iconGameObject.GetComponent<RectTransform>();
 
         // Set the anchor to the top left corner of its parent

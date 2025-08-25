@@ -106,7 +106,33 @@ public class ProficiencyHUD : MonoBehaviour
     {
         _proficiencyDisplays.Clear();
 
-        foreach (ProfStatType proficiency in ProfStatType.HeroProficiencies)
+        ProfStatType[] proficiencyOrder =
+        [
+            ProfStatType.OneHanded,
+            ProfStatType.TwoHanded,
+            ProfStatType.Archery,
+
+            ProfStatType.Magic,
+            ProfStatType.Unarmed,
+            ProfStatType.Shield,
+
+            ProfStatType.LightArmor,
+            ProfStatType.MediumArmor,
+            ProfStatType.HeavyArmor,
+
+            ProfStatType.Athletics,
+            ProfStatType.Evasion,
+            ProfStatType.Acrobatics,
+
+            ProfStatType.Alchemy,
+            ProfStatType.Handcrafting,
+            ProfStatType.Cooking,
+
+            ProfStatType.Sneak,
+            ProfStatType.Theft
+        ];
+
+        foreach (ProfStatType proficiency in proficiencyOrder)
         {
             string level = proficiency._getter(_hero).BaseValue.ToString();
             float progressToNextLevel = _hero.ProficiencyStats.GetProgressToNextLevel(proficiency);
