@@ -19,6 +19,31 @@ public class ProficiencyHUD : MonoBehaviour
     private List<ProficiencyDisplay> _proficiencyDisplays = new List<ProficiencyDisplay>();
     private int _totalProficiencyLevel = 0;
     private Text totalLevelLabel;
+    private ProfStatType[] proficiencyOrder =
+        [
+            ProfStatType.OneHanded,
+            ProfStatType.TwoHanded,
+            ProfStatType.Archery,
+
+            ProfStatType.Magic,
+            ProfStatType.Unarmed,
+            ProfStatType.Shield,
+
+            ProfStatType.LightArmor,
+            ProfStatType.MediumArmor,
+            ProfStatType.HeavyArmor,
+
+            ProfStatType.Athletics,
+            ProfStatType.Evasion,
+            ProfStatType.Acrobatics,
+
+            ProfStatType.Alchemy,
+            ProfStatType.Handcrafting,
+            ProfStatType.Cooking,
+
+            ProfStatType.Sneak,
+            ProfStatType.Theft
+        ];
     
     private const float ProficiencyHUDWidth = 176f;
     private const float ProficiencyHUDHeight = 246f;
@@ -110,32 +135,6 @@ public class ProficiencyHUD : MonoBehaviour
     private void InitProficiencyDisplays(GameObject proficiencyHUDBase)
     {
         _proficiencyDisplays.Clear();
-
-        ProfStatType[] proficiencyOrder =
-        [
-            ProfStatType.OneHanded,
-            ProfStatType.TwoHanded,
-            ProfStatType.Archery,
-
-            ProfStatType.Magic,
-            ProfStatType.Unarmed,
-            ProfStatType.Shield,
-
-            ProfStatType.LightArmor,
-            ProfStatType.MediumArmor,
-            ProfStatType.HeavyArmor,
-
-            ProfStatType.Athletics,
-            ProfStatType.Evasion,
-            ProfStatType.Acrobatics,
-
-            ProfStatType.Alchemy,
-            ProfStatType.Handcrafting,
-            ProfStatType.Cooking,
-
-            ProfStatType.Sneak,
-            ProfStatType.Theft
-        ];
 
         foreach (ProfStatType proficiency in proficiencyOrder)
         {
