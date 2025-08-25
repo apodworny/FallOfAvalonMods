@@ -18,8 +18,8 @@ public class ProficiencyHUD : MonoBehaviour
     private Hero _hero;    
     private List<ProficiencyDisplay> _proficiencyDisplays = new List<ProficiencyDisplay>();
     private int _totalProficiencyLevel = 0;
-    private Text totalLevelLabel;
-    private ProfStatType[] proficiencyOrder =
+    private Text _totalLevelLabel;
+    private ProfStatType[] _proficiencyOrder =
         [
             ProfStatType.OneHanded,
             ProfStatType.TwoHanded,
@@ -44,7 +44,9 @@ public class ProficiencyHUD : MonoBehaviour
             ProfStatType.Sneak,
             ProfStatType.Theft
         ];
-    
+    private NotificationSoundEvent _soundEvent = CommonReferences.Get.AudioConfig.ProficiencyAudio;
+    private NotificationsAudioService _audioService = World.Services.Get<NotificationsAudioService>();
+
     private const float ProficiencyHUDWidth = 176f;
     private const float ProficiencyHUDHeight = 246f;
 
@@ -89,11 +91,9 @@ public class ProficiencyHUD : MonoBehaviour
             _totalProficiencyLevel += 1;
 
             // Play a notification sound when leveling up a proficiency
-            NotificationSoundEvent soundEvent = CommonReferences.Get.AudioConfig.ProficiencyAudio;
-            NotificationsAudioService audioService = World.Services.Get<NotificationsAudioService>();
-            audioService?.PlayNotificationSound(soundEvent);
+            _audioService?.PlayNotificationSound(_soundEvent);
 
-            totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
+            _totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
         }
 
         proficiencyDisplay.levelLabel.text = typeofProfession._getter(_hero).BaseValue.ToString();
@@ -136,7 +136,7 @@ public class ProficiencyHUD : MonoBehaviour
     {
         _proficiencyDisplays.Clear();
 
-        foreach (ProfStatType proficiency in proficiencyOrder)
+        foreach (ProfStatType proficiency in _proficiencyOrder)
         {
             string level = proficiency._getter(_hero).BaseValue.ToString();
             float progressToNextLevel = _hero.ProficiencyStats.GetProgressToNextLevel(proficiency);
@@ -176,17 +176,17 @@ public class ProficiencyHUD : MonoBehaviour
         // Attach the totalProficiencyLevelGameObject to the proficiencyHUDBase
         totalProficiencyLevelGameObject.transform.SetParent(proficiencyHUDBase.transform, false);
 
-        totalLevelLabel = totalProficiencyLevelGameObject.AddComponent<Text>();
-        totalLevelLabel.fontSize = 16;
-        totalLevelLabel.color = Color.white;
-        totalLevelLabel.font = assets.LoadAsset<Font>("runescape_uf");
-        if (totalLevelLabel.font == null)
+        _totalLevelLabel = totalProficiencyLevelGameObject.AddComponent<Text>();
+        _totalLevelLabel.fontSize = 16;
+        _totalLevelLabel.color = Color.white;
+        _totalLevelLabel.font = assets.LoadAsset<Font>("runescape_uf");
+        if (_totalLevelLabel.font == null)
         {
             Plugin.Log.LogInfo("Font failed to load from asset bundle!");
         }
-        totalLevelLabel.alignment = TextAnchor.MiddleCenter;
+        _totalLevelLabel.alignment = TextAnchor.MiddleCenter;
 
-        RectTransform totalLevelLabelTransform = totalLevelLabel.GetComponent<RectTransform>();
+        RectTransform totalLevelLabelTransform = _totalLevelLabel.GetComponent<RectTransform>();
         totalLevelLabelTransform.anchorMin = new Vector2(1f, 0f);
         totalLevelLabelTransform.anchorMax = new Vector2(1f, 0f);
 
@@ -196,7 +196,7 @@ public class ProficiencyHUD : MonoBehaviour
         totalLevelLabelTransform.sizeDelta = new Vector2(50f, 50f);
         totalLevelLabelTransform.anchoredPosition = new Vector2(-40f, 33f);
 
-        totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
+        _totalLevelLabel.text = $"Total:\n{_totalProficiencyLevel}";
     }
 
     private void LoadAssetBundle()
