@@ -7,10 +7,9 @@ using UnityEngine;
 
 namespace ProficiencyHUD;
 
-[HarmonyPatch]
+[HarmonyPatch(typeof(ProficiencyStats), nameof(ProficiencyStats.TryAddXP))]
 public class TryAddXpPatch
 {
-    [HarmonyPatch(typeof(ProficiencyStats), nameof(ProficiencyStats.TryAddXP))]
     [HarmonyPostfix]
     static void TryAddXPPostfix(ProficiencyEventListener __instance, ProfStatType targetStatToRaiseXPOf, float amountOfXPToAdd)
     {
