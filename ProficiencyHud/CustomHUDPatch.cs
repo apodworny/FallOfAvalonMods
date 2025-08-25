@@ -23,4 +23,13 @@ public class CustomHUDPatch
         // Bind hero data to the proficiencyHUD
         proficiencyHUD.SetHero(__instance.Target);
     }
+
+    [HarmonyPatch(typeof(VHeroHUD), nameof(VHeroHUD.Update))]
+    [HarmonyPostfix]
+    static void UpdatePostfix(VHeroHUD __instance)
+    {
+        ProficiencyHUD proficiencyHUD = __instance.GetComponentInChildren<ProficiencyHUD>();
+
+        proficiencyHUD.SetHUDVisible(__instance.ShowBars ?? false);
+    }
 }

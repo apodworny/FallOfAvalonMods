@@ -20,6 +20,9 @@ public class ProficiencyDisplay : MonoBehaviour
     private GameObject _xpBarProgressGameObject;
     private Image _xpBarProgressImage;
     private float _lastFlashTime = -1f;
+    private Color _initialIconColor = Color.white;
+    private Color _targetIconColor;
+    private Image _iconImage;
 
     private Sprite _xpBarSprite = ProficiencyHUD.assets.LoadAsset<Sprite>("ProgressBar");
     private Font _rsFont = ProficiencyHUD.assets.LoadAsset<Font>("runescape_uf");
@@ -53,11 +56,50 @@ public class ProficiencyDisplay : MonoBehaviour
         StartCoroutine(FlashXPBarCoroutine());
     }
 
+    public void RunLevelUpColorChange()
+    {
+        StopAllCoroutines();
+        StartCoroutine(LevelUpColorCoroutine());
+    }
+
     private IEnumerator FlashXPBarCoroutine()
     {
         _xpBarProgressImage.color = new Color(1f, 0.84f, 0f, 1f);
         yield return new WaitForSecondsRealtime(0.2f);
         _xpBarProgressImage.color = Color.white;
+    }
+
+    private IEnumerator LevelUpColorCoroutine()
+    {
+        // Animate to the target color
+        float duration = 0.75f;
+        float t = 0f;
+        Color startColor = _iconImage.color;
+        while (t < duration)
+        {
+            t += Time.unscaledDeltaTime;
+            _iconImage.color = Color.Lerp(startColor, _targetIconColor, t / duration);
+            yield return null;
+        }
+        Plugin.Log.LogInfo($"Finished first while");
+        _iconImage.color = _targetIconColor;
+
+        // Wait a few seconds at the target color
+        yield return new WaitForSecondsRealtime(10f);
+
+        // Animate back to white
+        duration = 0.75f;
+        t = 0f;
+        startColor = _iconImage.color;
+        Color endColor = Color.white;
+        Plugin.Log.LogInfo($"Starting second while");
+        while (t < duration)
+        {
+            t += Time.unscaledDeltaTime;
+            _iconImage.color = Color.Lerp(startColor, endColor, t / duration);
+            yield return null;
+        }
+        _iconImage.color = endColor;
     }
 
     private void ConfigureProficiencyDisplay()
@@ -77,29 +119,30 @@ public class ProficiencyDisplay : MonoBehaviour
 
         _iconSprite = ProficiencyHUD.assets.LoadAsset<Sprite>(profStatType.EnumName);
 
-        Image iconImage = _iconGameObject.AddComponent<Image>();
-        iconImage.sprite = _iconSprite;
-        iconImage.preserveAspect = true;
+        _iconImage = _iconGameObject.AddComponent<Image>();
+        _iconImage.sprite = _iconSprite;
+        _iconImage.preserveAspect = true;
+        _iconImage.color = _initialIconColor;
 
         if (profStatType.Category == ProficiencyCategory.Strength)
         {
-            iconImage.color = new Color(1f, 0.3f, 0.3f, 0.8f);
+            _targetIconColor = new Color(1f, 0.3f, 0.3f, 0.8f);
         }
         else if (profStatType.Category == ProficiencyCategory.Endurance)
         {
-            iconImage.color = new Color(1f, 47f / 51f, 0.015686275f, 0.8f);
+            _targetIconColor = new Color(1f, 47f / 51f, 0.015686275f, 0.8f);
         }
         else if (profStatType.Category == ProficiencyCategory.Dexterity)
         {
-            iconImage.color = new Color(0f, 1f, 0f, 0.8f);
+            _targetIconColor = new Color(0f, 1f, 0f, 0.8f);
         }
         else if (profStatType.Category == ProficiencyCategory.Spirituality)
         {
-            iconImage.color = new Color(01f, 0.5f, 1f, 0.8f);
+            _targetIconColor = new Color(01f, 0.5f, 1f, 0.8f);
         }
         else if (profStatType.Category == ProficiencyCategory.Practicality)
         {
-            iconImage.color = new Color(0.3f, 0.7f, 1f, 1f);
+            _targetIconColor = new Color(0.3f, 0.7f, 1f, 1f);
         }
 
         RectTransform iconRect = _iconGameObject.GetComponent<RectTransform>();

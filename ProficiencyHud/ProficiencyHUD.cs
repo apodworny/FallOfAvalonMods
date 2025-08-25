@@ -19,6 +19,7 @@ public class ProficiencyHUD : MonoBehaviour
     private List<ProficiencyDisplay> _proficiencyDisplays = new List<ProficiencyDisplay>();
     private int _totalProficiencyLevel = 0;
     private Text _totalLevelLabel;
+    private CanvasGroup proficiencyHUDCanvasGroup;
     private ProfStatType[] _proficiencyOrder =
         [
             ProfStatType.OneHanded,
@@ -89,6 +90,7 @@ public class ProficiencyHUD : MonoBehaviour
         if (levelAfterXPApplied > oldLevel)
         {
             _totalProficiencyLevel += 1;
+            proficiencyDisplay.RunLevelUpColorChange();
 
             // Play a notification sound when leveling up a proficiency
             _audioService?.PlayNotificationSound(_soundEvent);
@@ -109,17 +111,24 @@ public class ProficiencyHUD : MonoBehaviour
         }
     }
 
+    public void SetHUDVisible(bool visible)
+    {
+        // Make sure the CanvasGroup is initialized
+        if (proficiencyHUDCanvasGroup == null)
+            proficiencyHUDCanvasGroup = GetComponentInChildren<CanvasGroup>();
+        if (proficiencyHUDCanvasGroup != null)
+            proficiencyHUDCanvasGroup.alpha = visible ? Plugin.PluginConfig.HUDOpacity.Value : 0f;
+    }
+
     private void ConfigureProficiencyHUDBase(Canvas canvas, GameObject proficiencyHUDBase)
     {
         // Attach the proficiencyHUDBase to the hero's canvas
         proficiencyHUDBase.transform.SetParent(canvas.transform, false);
 
         // Set the opacity
-        CanvasGroup canvasGroup = proficiencyHUDBase.GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-            canvasGroup = proficiencyHUDBase.AddComponent<CanvasGroup>();
-
-        canvasGroup.alpha = Plugin.PluginConfig.HUDOpacity.Value;
+        proficiencyHUDCanvasGroup = proficiencyHUDBase.GetComponent<CanvasGroup>();
+        if (proficiencyHUDCanvasGroup == null)
+            proficiencyHUDCanvasGroup = proficiencyHUDBase.AddComponent<CanvasGroup>();
 
         RectTransform proficiencyHUDTransform = proficiencyHUDBase.GetComponent<RectTransform>();
         proficiencyHUDTransform.sizeDelta = new Vector2(ProficiencyHUDWidth, ProficiencyHUDHeight);
