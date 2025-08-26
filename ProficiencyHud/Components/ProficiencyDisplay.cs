@@ -81,7 +81,6 @@ public class ProficiencyDisplay : MonoBehaviour
             _iconImage.color = Color.Lerp(startColor, _targetIconColor, t / duration);
             yield return null;
         }
-        Plugin.Log.LogInfo($"Finished first while");
         _iconImage.color = _targetIconColor;
 
         // Wait a few seconds at the target color
@@ -92,7 +91,7 @@ public class ProficiencyDisplay : MonoBehaviour
         t = 0f;
         startColor = _iconImage.color;
         Color endColor = Color.white;
-        Plugin.Log.LogInfo($"Starting second while");
+
         while (t < duration)
         {
             t += Time.unscaledDeltaTime;
