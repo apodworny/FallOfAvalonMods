@@ -30,15 +30,6 @@ lower_moddir=$(echo "$modDir" | tr '[:upper:]' '[:lower:]')
 # Get all tags for this mod, sorted by version descending
 mod_tags=($(git tag --list "${lower_moddir}-*" --sort=-v:refname))
 
-# Check if HEAD is at a release tag for this mod
-current_tag=$(git tag --points-at HEAD | grep "^${lower_moddir}-" | head -n 1)
-if [[ -z "$current_tag" ]]; then
-    echo "Error: HEAD is not a release tag for $modDir."
-    echo "       Please run the following command, and follow the instructions:"
-    echo "         ./bump-version.sh $modDir (major|minor|patch)"
-    exit 1
-fi
-
 echo "Packaging at release tag: $current_tag"
 
 if [[ ${#mod_tags[@]} -lt 2 ]]; then
