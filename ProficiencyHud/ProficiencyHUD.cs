@@ -15,7 +15,7 @@ public class ProficiencyHUD : MonoBehaviour
 
     public static readonly Color BackgroundColor = new(6f / 255f, 6f / 255f, 6f / 255f, 1f);
 
-    private Hero _hero;    
+    private Hero _hero;
     private List<ProficiencyDisplay> _proficiencyDisplays = new List<ProficiencyDisplay>();
     private int _totalProficiencyLevel = 0;
     private Text _totalLevelLabel;
@@ -50,27 +50,6 @@ public class ProficiencyHUD : MonoBehaviour
 
     private const float ProficiencyHUDWidth = 176f;
     private const float ProficiencyHUDHeight = 246f;
-
-    void Start()
-    {
-        // Destroy any existing ProficiencyHUDBase GameObject
-        var existingHUD = GameObject.Find("ProficiencyHUDBase");
-        if (existingHUD != null)
-        {
-            Destroy(existingHUD);
-        }
-
-        LoadAssetBundle();
-        GameObject proficiencyHUDBase = new GameObject("ProficiencyHUDBase", typeof(RectTransform));
-
-        // Get the canvas from the hero
-        Canvas canvas = GetComponentInParent<Canvas>();
-
-        ConfigureProficiencyHUDBase(canvas, proficiencyHUDBase);
-        InitProficiencyDisplays(proficiencyHUDBase);
-        ConfigureTotalProficiencyLevel(proficiencyHUDBase);
-        RepositionProficiencyDisplays();
-    }
 
     public void SetHero(Hero hero)
     {
@@ -118,6 +97,33 @@ public class ProficiencyHUD : MonoBehaviour
             proficiencyHUDCanvasGroup = GetComponentInChildren<CanvasGroup>();
         if (proficiencyHUDCanvasGroup != null)
             proficiencyHUDCanvasGroup.alpha = visible ? Plugin.PluginConfig.HUDOpacity.Value : 0f;
+    }
+
+    private void Start()
+    {
+        // Destroy any existing ProficiencyHUDBase GameObject
+        var existingHUD = GameObject.Find("ProficiencyHUDBase");
+        if (existingHUD != null)
+        {
+            Destroy(existingHUD);
+        }
+
+        LoadAssetBundle();
+        GameObject proficiencyHUDBase = new GameObject("ProficiencyHUDBase", typeof(RectTransform));
+
+        // Get the canvas from the hero
+        Canvas canvas = GetComponentInParent<Canvas>();
+
+        ConfigureProficiencyHUDBase(canvas, proficiencyHUDBase);
+        InitProficiencyDisplays(proficiencyHUDBase);
+        ConfigureTotalProficiencyLevel(proficiencyHUDBase);
+        RepositionProficiencyDisplays();
+    }
+
+    private void OnEnable()
+    {
+        // Sets the proficiency display icon back to white to avoid getting stuck mid-animation
+        _proficiencyDisplays.ForEach(profDisplay => profDisplay.iconImage.color = Color.white);
     }
 
     private void ConfigureProficiencyHUDBase(Canvas canvas, GameObject proficiencyHUDBase)

@@ -12,6 +12,7 @@ public class ProficiencyDisplay : MonoBehaviour
     public RectTransform proficiencyDisplayTransform;
     public ProfStatType profStatType;
     public RectTransform xpBarProgressTransform;
+    public Image iconImage;
 
     private Sprite _iconSprite;
     private GameObject _levelGameObject;
@@ -22,7 +23,6 @@ public class ProficiencyDisplay : MonoBehaviour
     private float _lastFlashTime = -1f;
     private Color _initialIconColor = Color.white;
     private Color _targetIconColor;
-    private Image _iconImage;
 
     private Sprite _xpBarSprite = ProficiencyHUD.assets.LoadAsset<Sprite>("ProgressBar");
     private Font _rsFont = ProficiencyHUD.assets.LoadAsset<Font>("runescape_uf");
@@ -74,14 +74,14 @@ public class ProficiencyDisplay : MonoBehaviour
         // Animate to the target color
         float duration = 0.75f;
         float t = 0f;
-        Color startColor = _iconImage.color;
+        Color startColor = iconImage.color;
         while (t < duration)
         {
             t += Time.unscaledDeltaTime;
-            _iconImage.color = Color.Lerp(startColor, _targetIconColor, t / duration);
+            iconImage.color = Color.Lerp(startColor, _targetIconColor, t / duration);
             yield return null;
         }
-        _iconImage.color = _targetIconColor;
+        iconImage.color = _targetIconColor;
 
         // Wait a few seconds at the target color
         yield return new WaitForSecondsRealtime(10f);
@@ -89,16 +89,16 @@ public class ProficiencyDisplay : MonoBehaviour
         // Animate back to white
         duration = 0.75f;
         t = 0f;
-        startColor = _iconImage.color;
+        startColor = iconImage.color;
         Color endColor = Color.white;
 
         while (t < duration)
         {
             t += Time.unscaledDeltaTime;
-            _iconImage.color = Color.Lerp(startColor, endColor, t / duration);
+            iconImage.color = Color.Lerp(startColor, endColor, t / duration);
             yield return null;
         }
-        _iconImage.color = endColor;
+        iconImage.color = endColor;
     }
 
     private void ConfigureProficiencyDisplay()
@@ -118,10 +118,10 @@ public class ProficiencyDisplay : MonoBehaviour
 
         _iconSprite = ProficiencyHUD.assets.LoadAsset<Sprite>(profStatType.EnumName);
 
-        _iconImage = _iconGameObject.AddComponent<Image>();
-        _iconImage.sprite = _iconSprite;
-        _iconImage.preserveAspect = true;
-        _iconImage.color = _initialIconColor;
+        iconImage = _iconGameObject.AddComponent<Image>();
+        iconImage.sprite = _iconSprite;
+        iconImage.preserveAspect = true;
+        iconImage.color = _initialIconColor;
 
         if (profStatType.Category == ProficiencyCategory.Strength)
         {
