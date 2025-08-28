@@ -1,4 +1,4 @@
-# HotkeyConsumables
+# HotkeyQuickslots
 <!--
 TODO:
 This is a .NET mod template for Tainted Grail: The Fall of Avalon mods.

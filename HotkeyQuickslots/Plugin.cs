@@ -3,7 +3,7 @@ using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 
-namespace HotkeyConsumables;
+namespace HotkeyQuickslots;
 
 [BepInPlugin(PluginConsts.PLUGIN_GUID, PluginConsts.PLUGIN_NAME, PluginConsts.PLUGIN_VERSION)]
 public class Plugin : BaseUnityPlugin

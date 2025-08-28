@@ -5,10 +5,11 @@ using Awaken.TG.MVC.UI.Events;
 using Awaken.TG.Main.Utility;
 using System.Linq;
 using System.Collections.Generic;
-namespace HotkeyConsumables;
+
+namespace HotkeyQuickslots;
 
 [HarmonyPatch(typeof(VHeroKeys), nameof(VHeroKeys.Handle))]
-public class EnemyHealthBarPatch
+public class VHeroKeysHandlePatch
 {
     [HarmonyPrefix]
     static bool HandlePrefix(VHeroKeys __instance, UIEvent evt)
@@ -26,7 +27,7 @@ public class EnemyHealthBarPatch
                 KeyBindings.UI.CharacterSheets.Journal
             ];
 
-            // Makes sure that the food quickslot is selected
+            // Makes sure that the food quickslot is always selected
             __instance.Target.HeroItems.SelectQuickSlot(EquipmentSlotType.FoodQuickSlot);
 
             if (handledActions.Contains(action))

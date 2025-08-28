@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="../Mod.props"/>
   <PropertyGroup>
-    <AssemblyName>HotkeyConsumables</AssemblyName>
-    <Product>HotkeyConsumables</Product>
+    <AssemblyName>HotkeyQuickslots</AssemblyName>
+    <Product>HotkeyQuickslots</Product>
     <Version>1.0.0</Version>
-    <RootNamespace>HotkeyConsumables</RootNamespace>
+    <RootNamespace>HotkeyQuickslots</RootNamespace>
   </PropertyGroup>
 </Project>
