@@ -3,8 +3,8 @@ using Awaken.TG.Main.Heroes.Items;
 using Awaken.TG.Main.Heroes;
 using Awaken.TG.MVC.UI.Events;
 using Awaken.TG.Main.Utility;
-using Awaken.TG.Main.Character;
 using System.Linq;
+using System.Collections.Generic;
 namespace HotkeyConsumables;
 
 [HarmonyPatch(typeof(VHeroKeys), nameof(VHeroKeys.Handle))]
@@ -18,30 +18,43 @@ public class EnemyHealthBarPatch
         if (evt is UIKeyDownAction uiDownAction)
         {
             string action = uiDownAction.Name;
-            if (action == KeyBindings.HeroItems.NextQuickSlot)
+
+            List<string> handledActions =
+            [
+                KeyBindings.HeroItems.UseQuickSlot,
+                KeyBindings.HeroItems.NextQuickSlot,
+                KeyBindings.UI.CharacterSheets.Journal
+            ];
+
+            // Makes sure that the food quickslot is selected
+            __instance.Target.HeroItems.SelectQuickSlot(EquipmentSlotType.FoodQuickSlot);
+
+            if (handledActions.Contains(action))
             {
-                System.Collections.Generic.IEnumerable<Item> items = __instance.Target.HeroItems.Items;
+                IEnumerable<Item> items = __instance.Target.HeroItems.Items;
 
-                Item quickSlot2Item = items.FirstOrDefault(item => item.EquippedInSlotOfType?.EnumName == "QuickSlot2");
                 Item foodQuickSlotItem = items.FirstOrDefault(item => item.EquippedInSlotOfType?.EnumName == "FoodQuickSlot");
+                Item quickSlot2Item = items.FirstOrDefault(item => item.EquippedInSlotOfType?.EnumName == "QuickSlot2");
+                Item quickSlot3Item = items.FirstOrDefault(item => item.EquippedInSlotOfType?.EnumName == "QuickSlot3");
 
-                __instance.Target.HeroItems.TryGetSelectedQuickSlotItem(out Item selectedItem);
-
-                // Accounts for the various states of the quick slot by making sure something always happens
-                if (selectedItem?._itemName == quickSlot2Item?._itemName)
+                if (action == handledActions[0])
                 {
                     __instance.UseQuickSlotItem(foodQuickSlotItem);
                 }
-                else if (selectedItem?._itemName == foodQuickSlotItem?._itemName)
+                else if (action == handledActions[1])
                 {
                     __instance.UseQuickSlotItem(quickSlot2Item);
                 }
-                else
+                else if (action == handledActions[2])
                 {
-                    __instance.Target.HeroItems.SelectNextQuickSlot();
+                    __instance.UseQuickSlotItem(quickSlot3Item);
                 }
 
                 return false;
+            }
+            else
+            {
+                return true;
             }
         }
         
