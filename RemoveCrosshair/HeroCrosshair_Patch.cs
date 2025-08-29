@@ -5,12 +5,12 @@ using UnityEngine;
 namespace RemoveCrosshair;
 
 [HarmonyPatch]
-public class CrosshairPatch
+public class HeroCrosshair_Patch
 {
     // Remove unwanted crosshair images, only leaves part of the crouching crosshair for sneaking info
     [HarmonyPatch(typeof(HeroCrosshair), nameof(HeroCrosshair.RefreshLayer))]
     [HarmonyPrefix]
-    public static bool OnRefreshLayerPrefix(HeroCrosshair __instance)
+    public static bool RefreshLayerPrefix(HeroCrosshair __instance)
     {
         // Loop through parts of the crosshair
         foreach (CrosshairPart part in __instance.Elements<CrosshairPart>())
