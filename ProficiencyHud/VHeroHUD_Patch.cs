@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ProficiencyHUD;
 
 [HarmonyPatch]
-public class CustomHUDPatch
+public class VHeroHUD_Patch
 {
     [HarmonyPatch(typeof(VHeroHUD), nameof(VHeroHUD.AfterFullyInitialized))]
     [HarmonyPostfix]

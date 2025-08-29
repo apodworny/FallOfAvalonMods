@@ -4,11 +4,12 @@ using Awaken.TG.Main.UI.HUD.AdvancedNotifications.LeftScreen.Proficiency;
 namespace ProficiencyHUD;
 
 [HarmonyPatch(typeof(ProficiencyNotificationBuffer), nameof(ProficiencyNotificationBuffer.MakeNotificationPresenter))]
-public class ProficiencyNotificationPatch
+public class ProficiencyNotificationBuffer_Patch
 {
     [HarmonyPrefix]
-    static bool MakeNotificationPresenterPrefix(ProficiencyNotificationBuffer __instance)
+    static bool MakeNotificationPresenterPrefix()
     {
+        // Prevents the default in-game proficiency notification from being created
         return false;
     }
 }
