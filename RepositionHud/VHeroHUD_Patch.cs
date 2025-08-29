@@ -4,7 +4,7 @@ using HarmonyLib;
 namespace RepositionHud;
 
 [HarmonyPatch]
-public class HudPatch
+public class VHeroHUD_Patch
 {
     // Adjust the position of the HUD bars
     [HarmonyPatch(typeof(VHeroHUD), nameof(VHeroHUD.AfterFullyInitialized))]
