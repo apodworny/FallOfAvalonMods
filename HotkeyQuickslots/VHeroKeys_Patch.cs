@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace HotkeyQuickslots;
 
 [HarmonyPatch(typeof(VHeroKeys), nameof(VHeroKeys.Handle))]
-public class VHeroKeysHandlePatch
+public class VHeroKeys_Patch
 {
     [HarmonyPrefix]
     static bool HandlePrefix(VHeroKeys __instance, UIEvent evt)
