@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Mod.props"/>
+  <PropertyGroup>
+    <AssemblyName>ViewEnemyHealthAndStamina</AssemblyName>
+    <Product>ViewEnemyHealthAndStamina</Product>
+    <Version>1.0.0</Version>
+    <RootNamespace>ViewEnemyHealthAndStamina</RootNamespace>
+  </PropertyGroup>
+</Project>

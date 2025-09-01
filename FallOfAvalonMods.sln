@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayEnemyLevels", "Displ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotkeyQuickslots", "HotkeyQuickslots\HotkeyQuickslots.csproj", "{6D007C37-98D9-41EE-B289-728957418DA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewEnemyHealthAndStamina", "ViewEnemyHealthAndStamina\ViewEnemyHealthAndStamina.csproj", "{DF142B8D-EB24-428B-A929-8FE129B60474}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,18 @@ Global
 		{6D007C37-98D9-41EE-B289-728957418DA5}.Release|x64.Build.0 = Release|Any CPU
 		{6D007C37-98D9-41EE-B289-728957418DA5}.Release|x86.ActiveCfg = Release|Any CPU
 		{6D007C37-98D9-41EE-B289-728957418DA5}.Release|x86.Build.0 = Release|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Debug|x64.Build.0 = Debug|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Debug|x86.Build.0 = Debug|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Release|x64.ActiveCfg = Release|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Release|x64.Build.0 = Release|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Release|x86.ActiveCfg = Release|Any CPU
+		{DF142B8D-EB24-428B-A929-8FE129B60474}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
